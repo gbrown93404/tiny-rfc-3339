@@ -17,3 +17,10 @@ If you just need to *reject* invalid timestamps, pulling in a full datetime pars
 ## The awkward edge
 
 RFC 3339 permits a fractional second with any number of digits. It does not require the `T` separator to be uppercase (lowercase `t` is legal). The `Z` designator is likewise case-insensitive. Both uppercase and lowercase forms are accepted here.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
